@@ -1,0 +1,3 @@
+HSS: Japanese Lv-1
+DE: High Performance Scientific Computing, Numerical Methods for Engineering Computations, Thermal Management of Electronics
+FE: Deep Learning, Programming and Data Structures
