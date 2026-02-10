@@ -6,6 +6,11 @@ def sqrt(num):
 	guess=1
 	for i in range(100):
 		guess=0.5*(guess+num/guess) # =guess-(guess^2-num)/(2*guess)
-	print(f"The estimated root of {num} is {guess:.5f}.")
+	print(guess)
 	ac_r=np.sqrt(num)
-	print(f"The accuracy of prediction is {abs(ac_r-guess)}.")
+	assert abs(ac_r-guess)/ac_r < 1e-10, "The accuracy of prediction is {abs(ac_r-guess)}."
+
+def main(lis):
+	for ele in lis:
+		sqrt(ele)
+

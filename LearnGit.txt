@@ -1,0 +1,68 @@
+git config --global user.name "B23451"
+git config --global user.email "B23451@students.iitmandi.ac.in
+git config --global core.editor "vim"
+git config --global init.defaultBranch main
+git config --global --edit # takes you to the file global in you editor
+git config --list --global # prints the above file on the screen
+git config -h #--help
+git help
+# If one of the directories are equipped with git, then all its children
+# directories along with their histories will be tracked by git
+# we don't need to create further git directories nested within
+git status
+git add <filename>
+git commit -m "Message"
+# After running this we will get a short identifier vis-a-vis: f22b25e
+git log # prints the above mentioned identifier to begin a large sequence
+git log -1 # prints only the most recent commit
+# After changing a file it shows changes not staged for commit
+# Use "git add <file>" or "git restore <file>" modified: filename
+git diff <filename>
+# In this situation above command will show the differences between
+# both the files the second line of it tells git about the versions.
+git diff HEAD <filename>
+# This shows the difference between the most recently commited version
+# of filename and current state of filename
+git diff HEAD~1 <filename>
+# This displayes the difference between current state of file and its 
+# state 1 commit earlier
+git show HEAD~2 <filename>
+# This will show the second last commit with commit-id, message along
+# with it's difference with the current version
+git diff f22b25e <filename>
+# This is the commit id of any particular commit. This compares the state
+# of file at that commit to the current state
+git restore <filename>
+# This option restores the current version of the file with most recently
+# committed version
+git restore -s f22b25e <filename> # We can get any version of file...
+# But again doing git restore <filename> will resotre the latest commit
+# If we surely want to keep that version then we can proceed with
+# git add <filename>, git commit -m "Message"
+
+.gitignore
+*.exe
+*.o
+__pychache__/
+!main.o # This will include main.o
+.py[copz] # This will ignore .pyc, .pyo ...
+# Now git add sub.o would require -f option
+git status --ignored # This will display Ignored files
+git remote add origin git@github.com:B23451/Reponame
+git remote -v # Output is a list of all the remotes
+# origin git..me (fetch)
+# origin git..me (push)
+ls -al ~/.ssh
+# ls: cannot access '/c/Users/..': No such file or directory
+ssh-keygen -t ed25519 # -C "Message" ; -C is option for adding a message to the key
+ssh -T git@github.com # Output: Hi B23451! You've successfully authenticated, but GitHub does not provide shell access
+git push -u origin main # using -u option sets upstream branch once and for all unless changed
+git pull
+git clone git@github.com:B23451/NMEC ~/sem6Courses/NMEC # If collaborator's permission is provided both can 
+# push, pull make changes and commit them
+git remote add [name] [url]
+git remote remove [name]
+git remote set-url [name] [newurl]
+git remote rename [oldname] [newname]
+
+
