@@ -27,7 +27,7 @@ git diff HEAD~1 <filename>
 # This displayes the difference between current state of file and its 
 # state 1 commit earlier
 git show HEAD~2 <filename>
-# This will show the second last commit with commit-id, message along
+# This will show the 3rd last commit with commit-id, message along
 # with it's difference with the current version
 git diff f22b25e <filename>
 # This is the commit id of any particular commit. This compares the state
