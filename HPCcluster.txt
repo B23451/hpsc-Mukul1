@@ -1,0 +1,100 @@
+ping 10.8.1.19 # To check if we are receiving information.
+ssh bgaurav@10.8.1.19 #ssh is a secure-shell for connecting to the cluster
+# After this step, It will ask for a password. We get a password from hpc
+# when we create an account. But if you have created a
+# lock and key pair it will just move ahead and now you are 
+# logged in into hpc-cluster example: "[bgaurav@n199 ~]$ ".
+pwd # /home/bgaurav
+cd ..
+pwd # output /home
+ls
+# Using the above step we can see all the people using the hpc-cluster
+# But we will not be able to go to anyone elses account unless
+# that person has provided access. i.e. cd ahdf will not work...
+cd bgaurav
+ls
+# there are quite some stuffs but there is a wd -> /wd/users/bgaurav
+# it is a different file system rather than /home/users/username it is..
+cd wd # now pwd will display /home/bgaurav/wd but we are in /wd/users/bgaurav
+# This is used for storing large files of sizes of the order of GB or TB
+# Singularity images of size of few GB each can be stored here
+python --version # output Python 2.7.5
+scl --list # output rh-python36
+scl enable rh-python36 bash
+python --version # output Python 3.6.12
+pip3 install --user proxy=http://10.8.0.1:8080 --upgrade pip
+cd virtualenvs/
+ls
+python3 -m venv venv10Feb # creating venv
+source venv10Feb/bin/activate # Activating created venv
+pip list # output pip (9.0.1) setuptools (36.5.0) == pip3 list
+pip3 install --proxy=http://10.8.0.1:8080 numpy
+pip3 list # output previous+ numpy (1.19.5)
+ping n4 or ping n5.cluster.iitmandi.ac.in # Operation not permitted
+ssh n10 # No route to host
+ssh n31 # Worked
+top
+exit # logout Connection to n31 closed
+
+# The scheduler installed on Param Himalayas is slurm
+# HPC cluster has PBS scheduler
+
+# Now we will learn about PBS scripts to run python code 
+# (Portable batch system)
+
+## These are directives so if the file is sent to the
+## scheduler these commands will give it directions
+
+#a.py
+"""
+#!/bin/bash
+#PBS -q privse # Queue to which we are sending out file
+#PBS -o out.o  
+#PBS -e out.e
+#PBS -N demo_me522_python
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=00:02:00
+#PBS -V # this is for importing all the environment variables
+
+cd $PBS_O_WORKDIR
+echo "Running on: "
+cat $PBS_NODEFILE
+cat $PBS_NODEFILE > machines.list
+echo "Program Output begins: "
+source ~/virtualenvs/venv123/bin/activate
+python python_script.py
+"
+qsub a.py # run the file provide a job id 480651.n199.cluster.iitmandi.ac.in
+# Files such as out.o, out.e, machines.list will be created in the pwd
+qstat # provides the status of job
+
+# Some environment variables avaliable to the user environment will be 
+# transported to the compute node just the variable names will be
+# prefixed with "PBS_O_" vis-a-vis "HOME"="PBS_O_HOME"
+# in addition some more environment variables will be avaliable
+# to the batch job such as "PBS_O_HOST","PBS_SERVER","PBS_O_QUEUE"
+man qsub
+-h you have submitted the job but don't want to execute it.(eg. dependencies issue)
+-I Declears that the job is to be run interactively
+-j joins error file and output file into one
+-l specify memory, n(node,core), walltime etc...
+-n specifies the jobs special access to the node
+-N specifies name of the job
+-p priority (-1024 to 1023) high priority executed quick. Not on our hpc cluster
+-q queue name to which you want to send the file
+-t submit an array of jobs # qsub script.sh -t 3-60
+-X Use Interactively using GUI
+
+qsub -I a.py # This will run only the directives part and will 
+# take you to compute node to actually do operations
+qsub -l walltime=00:00:01 -I a.py
+# even though a envvar is set inside the script the values printed
+# outside like this have higher priority
+qsub -l nodes=n31.cluster.iitmandi.ac.in -I a.py
+pbsnodes # It will give information about all machines on cluster
+qstat -a # gives a bit more detail...
+qstat -n # which node the job is sent
+qstat -q # details of the queue avaliable
+qstat -Q # more details about the queues avaliable
+# to copy files from the cluster
+scp file.name bgaurav@10.8.1.19:/path/to/send/file/to
