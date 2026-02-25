@@ -12,7 +12,7 @@ ls -S # Sorts the files by size in assending order
 ls -l # long listing format
 ls -h # converts size as 4234 as 4k (Human redable)
 ls -t # lists the items by time of last change
-ls -r # lists the contents of directory in reverse order
+ls -r # reverses the order of output of ls
 ls -option path # runs ls -options at path
 __________________________________________________________________
 __________________________________________________________________
