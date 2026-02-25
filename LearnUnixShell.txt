@@ -1,0 +1,66 @@
+pwd # present working directory
+ls -F # Classifies the output by adding a marker to the output
+# / For directory, @ indicates a link, * indicates an executable
+# ls --help or man ls In man ls try b and spacebar to go up and 
+# down by full page. To search something use /+word if multiple
+# matches found use "N" and "Shift+N" to move next and prev.
+# press q for quitting.
+ls -a # To include all files including those starting with . and ..
+ls -A # output of ls -a except . and ..
+ls -s # Displays size of the files
+ls -S # Sorts the files by size in assending order
+ls -l # long listing format
+ls -h # converts size as 4234 as 4k (Human redable)
+ls -t # lists the items by time of last change
+ls -r # lists the contents of directory in reverse order
+ls -option path # runs ls -options at path
+__________________________________________________________________
+__________________________________________________________________
+IMPLIMENTATION
+
+Question. Find the largest file in a folder, print its name
+then copy it to a folder called largest.
+ls -S <folderAddress> | head -1
+$(ls -S <folderAddress> | head -1)>largest
+
+Question. Count the number of files and directories in a given
+folder. Generate a new file with the text "The number of files
+and directories in the folder is xx.".
+ls | wc -w
+echo The number of ... in this folder is $(ls|wc -w).>nfd.txt
+
+Question. Write a script that prints the name of the file with the 
+longest name in a given directory.
+for f in $(ls)
+do
+echo ${#f} $f >> namelen.txt
+done
+sort -nr namelen.txt | head -1
+rm namelen.txt
+________________________________________________________________
+________________________________________________________________
+
+mv a/b.txt a/c.txt # Changes the location of the file
+cp a/b.txt a/c.txt # Copies the file
+# cp requires -r option to move directories
+rm -options <file/directory name>
+options -r(remove directories) -i(prompting y/n before removing)
+wc *
+# will give an output spanning multiple lines stating the number
+# of lines, words and characters in each file ending with
+# a total line. If directories are also present then it will 
+# output <name> it is a directory then 0 0 0 followed by name
+wc *.txt # will print size of all text files no directory issue here
+wc -m(for char) -w(for word) -l(for line)
+sort -n(alphanumeric sort) -r(reverseorder) <filename>
+My name is Mukul > Introduction.txt (won't work)
+We need
+echo My name is Mukul > Introduction.txt
+sort -nr
+cut -d , -f 2 a.txt
+# -d is dilimiter here set to "," can be set to ":" etc
+# -f 2 is for 2nd column, -f 1-4 works defalt delimiter "Tab"
+cut -d, -f 2 animals.csv|sort # Prints dictionary sorting of 2nd col
+cut -d, -f 2 animals.csv|sort|uniq # Prints only unique elements
+# using uniq before using sort don't assures it sort is nessesary
+cut -d, -f 2 animals.csv|sort|uniq -c # Prints the count of each element

@@ -14,3 +14,6 @@ def main(lis):
 	for ele in lis:
 		sqrt(ele)
 
+print("This function is run successfully.")
+print("It has two functions, sqrt(num), main(lis)")
+print("sqrt takes single number as input whereas main takes a list")
